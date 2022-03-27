@@ -1,0 +1,13 @@
+class Solution {
+public
+    int maxArea(vectorint& arr) {
+        int cost = 0, i = 0, j= arr.size()-1;
+        
+        while(i  j) {
+            cost = max(cost, (j-i)min(arr[i], arr[j]));
+            if(arr[i]arr[j]) ++i;
+            else --j;
+            }
+        return cost;
+    }
+};
