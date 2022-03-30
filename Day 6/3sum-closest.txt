@@ -1,0 +1,22 @@
+class Solution {
+public:
+    int threeSumClosest(vector<int>& nums, int target) {
+        sort(begin(nums), end(nums));
+        int m = INT_MAX, val = -1;
+        
+        for(int i = 0; i < nums.size(); ++i) {
+            int j = i + 1, k = nums.size() - 1;
+            while(j < k) {
+                int sum = nums[i] + nums[j] + nums[k];
+                if(abs(sum - target) < m) {
+                    m = abs(sum - target);
+                    val = sum;
+                }
+                if(sum > target) --k;
+                else ++j;
+            }
+        }
+        
+        return val;
+    }
+};
