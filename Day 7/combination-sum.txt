@@ -1,0 +1,24 @@
+class Solution {
+public:
+    vector<vector<int>> res;
+    vector<int> temp;
+    
+    void util(vector<int>& arr, int target, int index) {
+        if(target == 0) {
+            res.push_back(temp);
+            return;
+        }
+        if(index == arr.size() or target < 0) return;
+        for(int i = index; i < arr.size(); ++i) {
+            temp.push_back(arr[i]);
+            util(arr, target - arr[i], i);
+            temp.pop_back();
+        }
+    }
+    
+    vector<vector<int>> combinationSum(vector<int>& candidates, int target) {
+        res.clear();
+        util(candidates, target, 0);
+        return res;
+    }
+};

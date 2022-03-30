@@ -1,0 +1,11 @@
+class Solution {
+public:
+    int maxScore(vector<int>& arr, int k) {
+        int sum = accumulate(begin(arr), begin(arr) + k, 0), msum = sum;
+        for(int i = 0; i < k; ++i) {
+            sum += arr[arr.size() - 1 - i] - arr[k - 1 - i];
+            msum = max(msum, sum);
+        }
+        return msum;
+    }
+};
