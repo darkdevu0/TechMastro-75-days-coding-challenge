@@ -1,0 +1,22 @@
+class Solution {
+public:
+    int maxArea(int h, int w, vector<int>& hi, vector<int>& v) {
+        int max1 = 0, max2 = 0;
+        
+        sort(begin(hi), end(hi));
+        sort(begin(v), end(v));
+        
+        max1 = max({max1, hi[0], h - hi.back()});
+        max2 = max({max2, v[0], w - v.back()});
+        
+        for(int i = 0; i < hi.size() - 1; ++i) {
+            max1 = max(max1, hi[i + 1] - hi[i]);
+        }
+        
+        for(int i = 0; i < v.size() - 1; ++i) {
+            max2 = max(max2, v[i + 1] - v[i]);
+        }
+                
+        return ((long)max1 * max2) % ((int)1e9 + 7);
+    }
+};
