@@ -1,0 +1,22 @@
+class Solution {
+public:
+    vector<vector<vector<int>>> dp;
+    
+    int util(vector<int> &prices, int index, int k, bool hold) {
+        if(index == prices.size()) return 0;
+        if(k <= 0) return 0;
+        if(dp[index][k][hold] != -1) return dp[index][k][hold];
+        int skip = util(prices, index + 1, k, hold), choose;
+        if(hold) {
+            choose = prices[index] + util(prices, index + 1, k - 1, false);
+        } else {
+            choose = -prices[index] + util(prices, index + 1, k, true);
+        }
+        return dp[index][k][hold] = max(skip, choose);
+    }
+    
+    int maxProfit(vector<int>& prices) {
+        dp = vector<vector<vector<int>>>(prices.size(), vector<vector<int>>(3, vector<int>(2, -1)));
+        return util(prices, 0, 2, false);
+    }
+};
