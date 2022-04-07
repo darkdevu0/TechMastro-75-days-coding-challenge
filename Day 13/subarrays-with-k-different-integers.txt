@@ -1,0 +1,20 @@
+class Solution {
+public:
+    int util(vector<int> &nums, int k) {
+        int count = 0, j = 0;
+        unordered_map<int, int> c;
+        for(int i = 0; i < nums.size(); ++i) {
+            ++c[nums[i]];
+            while(c.size() > k) {
+                if(--c[nums[j]] == 0) c.erase(nums[j]);
+                ++j;
+            }
+            count += i - j + 1;
+        }
+        return count;
+    }
+    
+    int subarraysWithKDistinct(vector<int>& nums, int k) {
+        return util(nums, k) - util(nums, k - 1);
+    }
+};

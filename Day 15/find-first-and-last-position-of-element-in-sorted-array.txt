@@ -1,0 +1,20 @@
+class Solution {
+public:
+    vector<int> searchRange(vector<int>& nums, int target) {
+        if(nums.empty()) return {-1, -1};
+        int lo = 0, hi = nums.size() - 1;
+        while(lo < hi) {
+            int mid = lo + (hi - lo) / 2;
+            if(nums[mid] < target) lo = mid + 1;
+            else hi = mid;
+        }
+        if(nums[lo] != target) return {-1, -1};
+        int lo2 = 0, hi2 = nums.size();
+        while(lo2 < hi2) {
+            int mid = lo2 + (hi2 - lo2) / 2;
+            if(nums[mid] <= target) lo2 = mid + 1;
+            else hi2 = mid;
+        }
+        return {lo, lo2 - 1};
+    }
+};

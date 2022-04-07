@@ -1,0 +1,36 @@
+class Solution {
+public:
+    int longestOnes(vector<int>& nums, int k) {
+        vector<int> pre(nums.size());
+        int len = 0;
+        pre[0] = nums[0] == 0;
+        for(int i = 1; i < pre.size(); ++i) pre[i] += pre[i - 1] + (nums[i] == 0);
+        for(int i = 0; i < nums.size(); ++i) {
+            int left = i == 0 ? 0 : pre[i - 1], lo = i, hi = pre.size();
+            while(lo < hi) {
+                int mid = lo + (hi - lo) / 2;
+                if(pre[mid] - left <= k) lo = mid + 1;
+                else hi = mid;
+            }
+            len = max(len, lo - i);
+        }
+        return len;
+    }
+    
+    int characterReplacement(string s, int k) {
+        vector<int> arr(s.size());
+        int len = 0;
+        unordered_set<int> contain(begin(s), end(s));
+        
+        for(int x = 'A'; x <= 'Z'; ++x) {
+            if(!contain.count(x)) continue;
+            for(int i = 0; i < s.size(); ++i) {
+                if(s[i] == x) arr[i] = 1;
+                else arr[i] = 0;
+            }
+            len = max(len, longestOnes(arr, k));
+        }
+        
+        return len;
+    }
+};
