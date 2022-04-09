@@ -1,0 +1,31 @@
+class Solution {
+public:
+    int splitArray(vector<int>& nums, int m) {
+        int lo = *max_element(begin(nums), end(nums));
+        int hi = accumulate(begin(nums), end(nums), 0);
+        
+        auto util = [&](int limit) {
+            int curr = 0, count = 0;
+            for(auto &x: nums) {
+                curr += x;
+                if(curr == limit) {
+                    ++count;
+                    curr = 0;
+                } else if(curr > limit) {
+                    ++count;
+                    curr = x;
+                }
+            }
+            count += curr > 0;
+            return count;
+        };
+        
+        while(lo < hi) {
+            int mid = lo + (hi - lo) / 2;
+            if(util(mid) > m) lo = mid + 1;
+            else hi = mid;
+        }
+        
+        return lo;
+    }
+};
