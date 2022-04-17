@@ -1,0 +1,19 @@
+class Solution {
+public
+    vectorint nextGreaterElements(vectorint& nums) {
+        unordered_mapint, int count;
+        stackint q;
+        for(int i = 0; i  2  nums.size(); ++i) {
+            while(!q.empty() and nums[q.top()]  nums[i % nums.size()]) {
+                count[q.top()] = nums[i % nums.size()];
+                q.pop();
+            }
+            q.push(i % nums.size());
+        }
+        vectorint res;
+        for(int i = 0; i  nums.size(); ++i) {
+            res.push_back(count.count(i)  count[i]  -1);
+        }
+        return res;
+    }
+};
